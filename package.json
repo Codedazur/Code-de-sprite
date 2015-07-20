@@ -1,0 +1,25 @@
+{
+  "name": "Sprite",
+  "version": "0.1.0",
+  "description": "A Simple AMD sprite animation utility",
+  "main": "sprite.js",
+  "dependencies": {
+    "grunt": "^0.4.5"
+  },
+  "devDependencies": {
+    "grunt-contrib-uglify": "^0.9.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Codedazur/Sprite"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Codedazur/Sprite/issues"
+  },
+  "homepage": "https://github.com/Codedazur/Sprite"
+}

@@ -1,0 +1,23 @@
+{
+  "name": "Sprite",
+  "main": "sprite.js",
+  "version": "0.1.0",
+  "homepage": "https://github.com/Codedazur/Sprite",
+  "authors": [
+    "Rick Ootes <rick.ootes@codedazur.nl>"
+  ],
+  "description": "A simple sprite utility",
+  "keywords": [
+    "sprite",
+    "animation"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {}
+}
