@@ -30,10 +30,13 @@
         columns: 0,
         rows: 0,
         frames: 0,
+        frameWidth: null,
+        frameHeight: null,
         sprites: [],
         ratio: 1.5,
         autoPlay: false,
-        loop: false
+        loop: false,
+        loopDelay: 0
     };
 
     // create unique IDs for elements without id
@@ -58,8 +61,8 @@
         // Sets the id, generates an id when there's no id attribute
         this.id = this.options.id || this.$el.attr('id') || uniqueId();
 
-        // Holds the generated with and height of the container
-        this.container = {};
+        // Push loaded images in an array
+        this.cache = [];
         
         // Set default states
         this.state = {
@@ -76,15 +79,14 @@
     Sprite.prototype = { 
 
         /** 
-        *   @var {Integer} Remember the count of the loaded sprites
-        *   {Integer} 
-        */
-        loaded: 0,
-
-        /** 
         *   @var {Integer} Remember the current frame
         */
         currentFrame: 0,
+
+        /** 
+        *   @var {array} Stores loaded images
+        */
+        images: [],
 
 
         /** 
@@ -96,10 +98,13 @@
 
             var self = this;
 
+            // Skip initiation if canvas is not supported
+            if(!this.canvasSupported()) return;
+
             this.loadSprites(function () {
                 self.setState('loaded', true);
 
-                self.createContainer();
+                self.createCanvas();
 
                 if(self.options.autoPlay){
                     self.play();    
@@ -148,41 +153,37 @@
 
         },
 
-        /** 
-        *   Create container and appends the spritesheets
-        *
-        *   @return void
-        */
-        createContainer: function () {
 
-            var container = $('<div class="sprite-container"></div>');
+        /**
+         * Is canvas supported
+         *
+         * @returns {boolean} Is canvas supported
+         */
 
-            this.$el.append(container);
-
-            this.setContainerWidth()
-
-            for(var i = 0; i < this.options.sprites.length; i++){
-
-                var img = new Image();
-                img.src = this.options.sprites[i];
-
-                this.$el.find('.sprite-container').append(img);
-
+        canvasSupported: function () {
+            if (document.createElement('canvas').getContext === undefined) {
+                return false;
+            } else if (navigator.userAgent.match(/(Android (1.0|1.1|1.5|1.6|2.0|2.1))|(GT-P5110)|(Windows Phone (OS 7))|(XBLWP)|(ZuneWP)|(w(eb)?OSBrowser)|(webOS)|(Kindle\/(1.0|2.0|2.5|3.0))/)) {
+                return false;
             }
+
+            return true;
         },
 
         /** 
-        *   Set the width of the container
+        *   Create canvas and appends the spritesheets
         *
         *   @return void
         */
-        setContainerWidth: function () {
+        createCanvas: function () {
 
-            if(!this.$el.find('.sprite-container').length) return;
+            var canvas = $('<canvas class="sprite-canvas" id="canvas-'+ this.id +'"></canvas>');
+            this.$el.append(canvas);
+            this.canvas = this.$el.find("#canvas-" + this.id);
+            this.context = this.canvas[0].getContext('2d');
 
-            this.$el.find('.sprite-container')
-                .width(this.container.width * (this.$el.width() / this.options.frameWidth))
-                .height(this.container.height * (this.$el.width() / this.options.frameWidth));
+            this.setCanvasSize();
+
 
         },
 
@@ -215,7 +216,7 @@
             this.resizeTimeout = setTimeout(function () {
                 
                 self.setHeight();  
-                self.setContainerWidth();  
+                self.setCanvasSize();
                 self.setFrame(self.currentFrame);
 
             }, 300)
@@ -232,6 +233,20 @@
 
             var ratio = this.options.ratio;
             this.$el.height(this.$el.width() / ratio);            
+
+        },
+
+
+        setCanvasSize: function () {
+
+            if(!this.$el.find('canvas').length) return;
+
+            var width = $(window).width() * (this.$el.width() / this.options.frameWidth),
+                height = width / this.options.ratio;
+
+             this.$el.find('canvas')
+                .attr('width', width)
+                .attr('height', height);
 
         },
 
@@ -273,13 +288,10 @@
         *   @return void
         */
         onSpriteLoaded: function (callback, e) {
-
-
-            this.container.width = e.target.width;
-            this.container.height = (this.container.height || 0) + e.target.height;
             
-            this.loaded++;
-            if(this.options.sprites.length !== this.loaded) return;
+            this.cache.push(e.target);
+
+            if(this.options.sprites.length !== this.cache.length) return;
 
             if($.isFunction(callback)){
                 callback();
@@ -310,28 +322,51 @@
         */
         setFrame: function (index) {
 
-            var x = - (this.options.frameWidth * (this.$el.width() / this.options.frameWidth)) * (index % this.options.columns),
-                y = - (this.options.frameHeight * (this.$el.width() / this.options.frameWidth)) * Math.floor(index / this.options.columns);
+            var self = this;
 
+            var spriteIndex = Math.floor(index / (this.options.columns * this.options.rows)),
+                index = index % (this.options.columns * this.options.rows),
+                img = this.getCachedImage(spriteIndex),
+                sx = this.options.frameWidth * (index % this.options.columns),
+                sy = this.options.frameHeight * Math.floor(index / this.options.columns),
+                swidth = this.options.frameWidth,
+                sheight = this.options.frameHeight,
+                x = 0,
+                y = 0,               
+                width = this.options.frameWidth * (this.canvas.width() / this.options.frameWidth),
+                height = this.options.frameHeight * (this.canvas.width() / this.options.frameWidth);
+            
+            self.context.drawImage(img, sx, sy, swidth, sheight, x, y, width, height);            
 
-            if(this.hasTransform()){
+          
+        },
 
-                this.$el.find('.sprite-container').css({
-                    '-webkit-transform': 'translate('+ x +'px, '+ y +'px)',
-                    '-ms-transform': 'translate('+ x +'px, '+ y +'px)',
-                    'transform': 'translate('+ x +'px, '+ y +'px)'
+        /**
+         * Get the cached image by index
+         *  @param {integer} index
+         *
+         *
+         *  @return {object} html image object
+         */
+        getCachedImage: function (index) {
+
+            var url = this.options.sprites[index],
+                result = this.cache.filter(function (val) {
+                    return val.src.indexOf(url) > -1;
                 });
 
-            }else{
+            return result[0];
 
-                this.$el.find('.sprite-container').css({
-                    left: x + 'px',
-                    top: y + 'px',
-                    position: 'absolute'
-                });
+        },
 
+        /**
+         * Clear the canvas
+         */
+
+        clearCanvas: function () {
+            if (this.context) {
+                this.context.clearRect(0, 0, this.canvas.width(), this.canvas.height());
             }
-
         },
 
         /** 
@@ -383,7 +418,18 @@
                 this.setState('playing', false);
                 return;  
             }else if(this.currentFrame > this.options.frames- 1 && this.options.loop){
-                this.currentFrame = 0;
+
+                if(this.options.loopDelay > 0){
+
+                    this.currentFrame = 0;
+                    setTimeout($.proxy(this, 'play'), this.options.loopDelay);
+                    return;
+
+                }else{
+                    this.currentFrame = 0;    
+                }
+                
+
             }
 
             this.setFrame(this.currentFrame);
