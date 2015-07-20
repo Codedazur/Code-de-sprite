@@ -119,7 +119,9 @@
         */
         enable: function () {
 
-            $(window).on('resize.' + this.id, $.proxy(this, 'onResize'));
+            $(window)
+                .on('resize.' + this.id, $.proxy(this, 'onResize'))
+                .on('orientationchange.' + this.id, $.proxy(this, 'onResize'));
 
         },
 
@@ -180,7 +182,7 @@
 
             this.$el.find('.sprite-container')
                 .width(this.container.width * (this.$el.width() / this.options.frameWidth))
-                .height(this.container.height);
+                .height(this.container.height * (this.$el.width() / this.options.frameWidth));
 
         },
 
@@ -211,9 +213,12 @@
 
             if(this.resizeTimeout) clearTimeout(this.resizeTimeout);
             this.resizeTimeout = setTimeout(function () {
+                
                 self.setHeight();  
                 self.setContainerWidth();  
-            }, 100)
+                self.setFrame(self.currentFrame);
+
+            }, 300)
             
 
         },
