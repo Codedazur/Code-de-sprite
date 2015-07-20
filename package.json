@@ -1,6 +1,6 @@
 {
   "name": "Sprite",
-  "version": "0.1.1",
+  "version": "0.1.5",
   "description": "A Simple AMD sprite animation utility",
   "main": "sprite.js",
   "dependencies": {
