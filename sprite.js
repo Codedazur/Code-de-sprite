@@ -378,11 +378,11 @@
             this.setState('playing', true);
             this.setState('ended', false);
 
-            if(this.currentFrame >= this.options.frames && !this.options.loop){
+            if(this.currentFrame >= this.options.frames -1 && !this.options.loop){
                 this.setState('ended', true);
                 this.setState('playing', false);
                 return;  
-            }else if(this.currentFrame >= this.options.frames && this.options.loop){
+            }else if(this.currentFrame >= this.options.frames- 1 && this.options.loop){
                 this.currentFrame = 0;
             }
 
