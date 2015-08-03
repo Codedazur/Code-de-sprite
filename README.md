@@ -45,11 +45,21 @@ For example if we wan't to know when all Sprites are loaded we use the following
 
 ```javascript
 	 new CodeDeSprite('.target', {
+	 	fps: 60,
+	 	columns: 3,
+	 	rows: 3,
+	 	frames: 27,
+	 	frameWidth: 100,
+	 	frameHeight: 100
 	 	sprites: [
 	 		'/assets/img/sprite-0.png'
 	 		'/assets/img/sprite-1.png'
 	 		'/assets/img/sprite-2.png'
 	 	],
+	 	ratio: 1.5,
+	 	autoplay: false,
+	 	loop: false,
+	 	loopDelay: false,
 	 	loaded: function () {
 	 		alert('Sprites are loaded')	
 	 	}
