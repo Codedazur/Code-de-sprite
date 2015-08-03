@@ -52,8 +52,8 @@ For example if we wan't to know when all Sprites are loaded we use the following
 	 	frameWidth: 100,
 	 	frameHeight: 100
 	 	sprites: [
-	 		'/assets/img/sprite-0.png'
-	 		'/assets/img/sprite-1.png'
+	 		'/assets/img/sprite-0.png',
+	 		'/assets/img/sprite-1.png',
 	 		'/assets/img/sprite-2.png'
 	 	],
 	 	ratio: 1.5,
