@@ -20,7 +20,7 @@
 
     'use strict';
 
-    var Sprite,
+    var CodeDeSprite,
         defaults;
 
     defaults = {
@@ -50,7 +50,7 @@
      * @param {string} selector - The html element or selector.
      * @param {object} options - Extend the defaults with these options
     */
-    Sprite = function (el, options) {
+    CodeDeSprite = function (el, options) {
 
         this.$el = $(el);
 
@@ -75,7 +75,7 @@
     }
 
 
-    Sprite.prototype = { 
+    CodeDeSprite.prototype = { 
 
         /** 
         *   @var {Integer} Remember the current frame
@@ -508,5 +508,5 @@
         }
     }
     
-    return Sprite;
+    return CodeDeSprite;
 }));
