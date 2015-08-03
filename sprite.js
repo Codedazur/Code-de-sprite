@@ -125,8 +125,7 @@
         enable: function () {
 
             $(window)
-                .on('resize.' + this.id, $.proxy(this, 'onResize'))
-                .on('orientationchange.' + this.id, $.proxy(this, 'onResize'));
+                .on('resize.' + this.id, $.proxy(this, 'onResize'));
 
         },
 
@@ -208,19 +207,18 @@
         *
         *   @return void
         */
-        onResize: function () {
+        onResize: function (e) {
 
             var self = this;
 
             if(this.resizeTimeout) clearTimeout(this.resizeTimeout);
             this.resizeTimeout = setTimeout(function () {
-                
-                self.setHeight();  
-                self.setCanvasSize();
+
+                self.setCanvasSize();                
+                self.setHeight(); 
                 self.setFrame(self.currentFrame);
 
-            }, 300)
-            
+            }, 100);
 
         },
 
@@ -241,12 +239,13 @@
 
             if(!this.$el.find('canvas').length) return;
 
-            var width = $(window).width() * (this.$el.width() / this.options.frameWidth),
+            var width = this.$el.width(),
                 height = width / this.options.ratio;
 
              this.$el.find('canvas')
                 .attr('width', width)
                 .attr('height', height);
+                
 
         },
 
@@ -322,6 +321,7 @@
         */
         setFrame: function (index) {
 
+
             var self = this;
 
             var spriteIndex = Math.floor(index / (this.options.columns * this.options.rows)),
@@ -335,7 +335,7 @@
                 y = 0,               
                 width = this.options.frameWidth * (this.canvas.width() / this.options.frameWidth),
                 height = this.options.frameHeight * (this.canvas.width() / this.options.frameWidth);
-            
+
             self.context.drawImage(img, sx, sy, swidth, sheight, x, y, width, height);            
 
           
@@ -413,11 +413,11 @@
             this.setState('playing', true);
             this.setState('ended', false);
 
-            if(this.currentFrame > this.options.frames -1 && !this.options.loop){
+            if(this.currentFrame >= this.options.frames && !this.options.loop){
                 this.setState('ended', true);
                 this.setState('playing', false);
                 return;  
-            }else if(this.currentFrame > this.options.frames- 1 && this.options.loop){
+            }else if(this.currentFrame >= this.options.frames && this.options.loop){
 
                 if(this.options.loopDelay > 0){
 
