@@ -70,8 +70,8 @@ For example if we wan't to know when all Sprites are loaded we use the following
 There's an action interface to controll the animation.    
 Currently there are 2 actions available: `play` and `pause`.
 
-The keys of the objects represent the action to execute and value the selector.  
-If the user click on the `.play` element the play method is executed. 
+The keys of the objects represent the action to execute and the value represents the selector.  
+For example: If the user click on the `.play` element the play method is executed. 
 
 ```javascript
 	actions: {
