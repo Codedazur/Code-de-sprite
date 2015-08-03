@@ -2,7 +2,7 @@
  * Code de Sprite
  *
  * @namespace
- * @name code-de-sprite.js
+ * @name sprite.js
  * @author Rick Ootes | Code d'Azur
  * @date: 20/07/15
  */
@@ -249,7 +249,7 @@
 
             // Callback mechanism
             if($.isFunction(this.options[key]) && value){
-                this.options[key]();
+                this.options[key].apply(this);
             }
 
         },
