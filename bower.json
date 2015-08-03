@@ -1,12 +1,12 @@
 {
-  "name": "Sprite",
-  "main": "sprite.js",
+  "name": "Code de Sprite",
+  "main": "codedesprite.js",
   "version": "0.2.0",
-  "homepage": "https://github.com/Codedazur/Sprite",
+  "homepage": "https://github.com/Codedazur/Code-de-sprite",
   "authors": [
     "Rick Ootes <rick.ootes@codedazur.nl>"
   ],
-  "description": "A simple sprite utility",
+  "description": "A simple sprite utility by Code d'Azure",
   "keywords": [
     "sprite",
     "animation"
