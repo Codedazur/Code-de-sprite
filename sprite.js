@@ -36,7 +36,8 @@
         ratio: 1.5,
         autoPlay: false,
         loop: false,
-        loopDelay: 0
+        loopDelay: 0,
+        actions: null
     };
 
     // create unique IDs for elements without id
@@ -127,7 +128,56 @@
             $(window)
                 .on('resize.' + this.id, $.proxy(this, 'onResize'));
 
+            this.enableActions();
+
+
         },
+
+        /** 
+        *   Add action events
+        *
+        *   @return void
+        */
+        enableActions: function () {
+
+
+            if(this.options.actions){
+                for(var i = 0; i < Object.keys(this.options.actions).length; i++){
+                    
+                    var action = Object.keys(this.options.actions)[i],
+                        selector = this.options.actions[action];
+
+                    this.$el.on('click.' + this.id, selector, $.proxy(this, 'action', action));
+
+                }
+            }
+
+        },
+
+
+        /** 
+        *   Action middleware
+        *
+        *   @return void
+        */
+        action: function (action, e) {
+
+            switch(action){
+                case('play'):
+                    
+                    if(this.state.ended){
+                        this.goToAndPlay(0);
+                    }else{
+                        this.play();
+                    }
+
+
+                    break;
+                default:
+                    throw 'Action not defined';
+            }
+        },
+
 
         /** 
         *   Destroy events
@@ -198,6 +248,11 @@
 
             this.state[key] = value;
             this.$el.trigger(key, value);
+
+            // Callback mechanism
+            if($.isFunction(this.options[key]) && value){
+                this.options[key]();
+            }
 
         },
 
@@ -413,11 +468,11 @@
             this.setState('playing', true);
             this.setState('ended', false);
 
-            if(this.currentFrame >= this.options.frames && !this.options.loop){
+            if(this.currentFrame >= this.options.frames -1 && !this.options.loop){
                 this.setState('ended', true);
                 this.setState('playing', false);
                 return;  
-            }else if(this.currentFrame >= this.options.frames && this.options.loop){
+            }else if(this.currentFrame > this.options.frames- 1 && this.options.loop){
 
                 if(this.options.loopDelay > 0){
 
