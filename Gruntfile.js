@@ -5,7 +5,7 @@ module.exports = function(grunt) {
             dist: {
                 options: {},
                 files: {
-                    'sprite.min.js': ['sprite.js']
+                    'code-de-sprite.min.js': ['code-de-sprite.js']
                 }
             }
         }
