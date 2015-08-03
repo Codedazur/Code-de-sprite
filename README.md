@@ -29,7 +29,7 @@ The target property has to contain the HTML element that will function as the co
 | autoplay      | false         | Boolean        |  Should the animation automaticly play?           |
 | loop          | false         | Boolean        |  Should the animation loop?                       | 
 | loopDelay     | 0             | Integer        |  A delay between the restart of the animation     | 
-| actions **    | null          | Object         |  A hook for the actions interface                 |
+| actions **    | null          | Object         |  A hook for the [actions interface](#actions)     |
 
 \* Some older devices don't support spritesheets above 1024px x 1024px, therefor there's the option to add multiple spritesheets    
 \** See the "Actions" chapter for more information
