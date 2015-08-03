@@ -2,7 +2,7 @@
  * Code de Sprite
  *
  * @namespace
- * @name sprite.js
+ * @name code-de-sprite.js
  * @author Rick Ootes | Code d'Azur
  * @date: 20/07/15
  */
