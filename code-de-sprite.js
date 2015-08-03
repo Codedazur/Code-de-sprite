@@ -168,9 +168,9 @@
                     }else{
                         this.play();
                     }
-
-
                     break;
+                case('pause'):
+                    this.pause();
                 default:
                     throw 'Action not defined';
             }

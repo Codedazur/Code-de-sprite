@@ -15,7 +15,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
 
     // Tasks
-    grunt.registerTask('dist', ['uglify:dist']);
+    grunt.registerTask('build', ['uglify:dist']);
 
 
 };
