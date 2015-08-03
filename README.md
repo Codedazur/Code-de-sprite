@@ -1,2 +1,1 @@
-# Sprite
-A Simple AMD sprite animation utility
+# Code de Sprite

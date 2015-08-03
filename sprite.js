@@ -1,7 +1,5 @@
 /**
- * Sprite animation class
- *
- *
+ * Code de Sprite
  *
  * @namespace
  * @name sprite.js
