@@ -16,22 +16,22 @@ Invoke a new instance with the `new` operator.
 The target property has to contain the HTML element that will function as the container of the Sprite class (or a selector string).
 
 ## Options
-| Name          | Default       | Description                                      |
-| ------------- |---------------| -------------------------------------------------|
-| fps           | 60            | Amount of frame per second                       |
-| columns       | 0             | The amount of columns per spritesheet            |
-| rows          | 0             | The amount of rows per spritesheet               |
-| frames        | 0             | The amount frames in all spritesheets combined   |                               
-| frameWidth    | null          | The width of a frame in px                       |                               
-| frameHeight   | null          | The height of a frame in px                      |                               
-| sprites *     | []            | An array with all the Spritesheets               |                               
-| ratio         | 1.5           | Width to height ratio of the animation           |
-| autoplay      | false         | Should the animation automaticly play?           |
-| loop          | false         | Should the animation loop?                       | 
-| loopDelay     | 0             | A delay between the restart of the animation     | 
-| actions **    | null          | A hook for the actions interface                 |
+| Name          | Default       | Type           |  Description                                      |
+| ------------- |---------------| ---------------|---------------------------------------------------|
+| fps           | 60            | Integer        |  Amount of frame per second                       |
+| columns       | 0             | Integer        |  The amount of columns per spritesheet            |
+| rows          | 0             | Integer        |  The amount of rows per spritesheet               |
+| frames        | 0             | Integer        |  The amount frames in all spritesheets combined   |                               
+| frameWidth    | null          | Integer        |  The width of a frame in px                       |                               
+| frameHeight   | null          | Integer        |  The height of a frame in px                      |                               
+| sprites *     | []            | Array          |  An array with all the Spritesheets               |                               
+| ratio         | 1.5           | Float          |  Width to height ratio of the animation           |
+| autoplay      | false         | Boolean        |  Should the animation automaticly play?           |
+| loop          | false         | Boolean        |  Should the animation loop?                       | 
+| loopDelay     | 0             | Integer        |  A delay between the restart of the animation     | 
+| actions **    | null          | Object         |  A hook for the actions interface                 |
 
-\* Some older devices don't support spritesheets above 1024px x 1024px    
+\* Some older devices don't support spritesheets above 1024px x 1024px, therefor there's the option to add multiple spritesheets    
 \** See the "Actions" chapter for more information
 
 ## Callbacks
