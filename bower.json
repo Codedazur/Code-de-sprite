@@ -1,10 +1,13 @@
 {
   "name": "Code de Sprite",
   "main": "codedesprite.js",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "homepage": "https://github.com/Codedazur/Code-de-sprite",
   "authors": [
     "Rick Ootes <rick.ootes@codedazur.nl>"
+  ],
+  "scripts": [
+    "code-de-sprite.js"
   ],
   "description": "A simple sprite utility by Code d'Azure",
   "keywords": [
